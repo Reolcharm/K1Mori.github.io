@@ -76,7 +76,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/gallery/index.html" data-id="ck053lvje000fzswt1hg2o7yy" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/gallery/index.html" data-id="ck055o3wq0004l4wtutrd9qwy" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -171,10 +171,70 @@
 </div>
       </div>
       <footer id="colophon" role="contentinfo">
-    <p>&copy; 2019 John Doe
-    All rights reserved.</p>
-    <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+  <span id="sitetime"></span>
+  <p>
+    &copy; 2019 John Doe
+    All rights reserved.
+  </p>
+  <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+  <script language="javascript">
+    function siteTime() {
+      window.setTimeout("siteTime()", 1000);
+      var seconds = 1000;
+      var minutes = seconds * 60;
+      var hours = minutes * 60;
+      var days = hours * 24;
+      var years = days * 365;
+      var today = new Date();
+      var todayYear = today.getFullYear();
+      var todayMonth = today.getMonth() + 1;
+      var todayDate = today.getDate();
+      var todayHour = today.getHours();
+      var todayMinute = today.getMinutes();
+      var todaySecond = today.getSeconds();
+      var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+      var t2 = Date.UTC(
+        todayYear,
+        todayMonth,
+        todayDate,
+        todayHour,
+        todayMinute,
+        todaySecond
+      );
+      var diff = t2 - t1;
+      var diffYears = Math.floor(diff / years);
+      var diffDays = Math.floor(diff / days - diffYears * 365);
+      var diffHours = Math.floor(
+        (diff - (diffYears * 365 + diffDays) * days) / hours
+      );
+      var diffMinutes = Math.floor(
+        (diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+          minutes
+      );
+      var diffSeconds = Math.floor(
+        (diff -
+          (diffYears * 365 + diffDays) * days -
+          diffHours * hours -
+          diffMinutes * minutes) /
+          seconds
+      );
+      document.getElementById("sitetime").innerHTML =
+        "本站已运行 " +
+        diffYears +
+        " 年 " +
+        diffDays +
+        " 天 " +
+        diffHours +
+        " 小时 " +
+        diffMinutes +
+        " 分钟 " +
+        diffSeconds +
+        " 秒";
+    } /*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+  </script>
 </footer>
+
     <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js'];</script>
 
 <script src="/js/jquery-3.3.1.min.js"></script>
