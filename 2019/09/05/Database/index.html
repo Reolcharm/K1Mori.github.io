@@ -4,7 +4,24 @@
   <meta charset="utf-8">
   
   
-  <meta name="description" content="考点全局总览">
+  <meta name="description" content="考点全局总览
+架构
+索引
+
+索引的数据结构
+如何调优 Sql
+最左匹配原则的成因
+索引是建立越多越好吗?
+
+锁
+1. 区别
+解析
+表级锁:MySQL 中锁住一张表的读写:
+
+
+只有释放了读锁(结束 select 语句的执行), myisam 才会进行 update 操作.
+
+写锁又被称为 排他锁 :">
   
 
   
@@ -15,18 +32,32 @@
   
   <title>Database | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="考点全局总览">
+  <meta name="description" content="考点全局总览 架构 索引  索引的数据结构 如何调优 Sql 最左匹配原则的成因 索引是建立越多越好吗?  锁 1. 区别 解析 表级锁:MySQL 中锁住一张表的读写:   只有释放了读锁(结束 select 语句的执行), myisam 才会进行 update 操作.  写锁又被称为 排他锁 :上了写锁, 再上读/写锁, 读/写锁会被 block 住, 只有等 写锁 释放了才能进行读/其他写操">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Database">
 <meta property="og:url" content="https://reolcharm.github.io/2019/09/05/Database/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="考点全局总览">
+<meta property="og:description" content="考点全局总览 架构 索引  索引的数据结构 如何调优 Sql 最左匹配原则的成因 索引是建立越多越好吗?  锁 1. 区别 解析 表级锁:MySQL 中锁住一张表的读写:   只有释放了读锁(结束 select 语句的执行), myisam 才会进行 update 操作.  写锁又被称为 排他锁 :上了写锁, 再上读/写锁, 读/写锁会被 block 住, 只有等 写锁 释放了才能进行读/其他写操">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/20190905160632.png">
-<meta property="og:updated_time" content="2019-09-05T08:37:46.745Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-14-19">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-17-15">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-32-56">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-28-42">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-5-19-25-45">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-31-0">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-42-3">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-41-2">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-10-0-42">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-11-24-19">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-11-59-44">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-11-48-30">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-12-44-4">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-12-44-49">
+<meta property="og:updated_time" content="2019-09-06T05:57:40.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Database">
-<meta name="twitter:description" content="考点全局总览">
+<meta name="twitter:description" content="考点全局总览 架构 索引  索引的数据结构 如何调优 Sql 最左匹配原则的成因 索引是建立越多越好吗?  锁 1. 区别 解析 表级锁:MySQL 中锁住一张表的读写:   只有释放了读锁(结束 select 语句的执行), myisam 才会进行 update 操作.  写锁又被称为 排他锁 :上了写锁, 再上读/写锁, 读/写锁会被 block 住, 只有等 写锁 释放了才能进行读/其他写操">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/20190905160632.png">
   
   
@@ -83,14 +114,44 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/05/Database/" data-id="ck06opiy70001l4wtdvl5kwsn" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/05/Database/" data-id="ck099oagd00034swtijvb90bu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
-        <h1 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h1><p>全局总览</p>
-<p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/20190905160632.png" alt></p>
+        <h1 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h1><h2 id="全局总览"><a href="#全局总览" class="headerlink" title="全局总览"></a>全局总览</h2><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/20190905160632.png" alt></p>
+<h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-14-19" alt="Database-2019-9-6-9-14-19"></p>
+<h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-17-15" alt="Database-2019-9-6-9-17-15"></p>
+<ol start="3">
+<li>索引的数据结构<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-32-56" alt="Database-2019-9-6-9-32-56"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-28-42" alt="Database-2019-9-6-9-28-42"></li>
+<li>如何调优 Sql<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-5-19-25-45" alt="Database-2019-9-5-19-25-45"></li>
+<li>最左匹配原则的成因</li>
+<li>索引是建立越多越好吗?</li>
+</ol>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-31-0" alt="Database-2019-9-6-9-31-0"></p>
+<h3 id="1-区别"><a href="#1-区别" class="headerlink" title="1. 区别"></a>1. 区别</h3><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-42-3" alt="Database-2019-9-6-9-42-3"></p>
+<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><ul>
+<li><p>表级锁:MySQL 中锁住一张表的读写:</p>
+<p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-41-2" alt="Database-2019-9-6-9-41-2"></p>
+</li>
+<li><p>只有释放了读锁(结束 select 语句的执行), myisam 才会进行 update 操作.</p>
+</li>
+<li>写锁又被称为 <strong>排他锁</strong> :上了写锁, 再上读/写锁, 读/写锁会被 block 住, 只有等 写锁 释放了才能进行读/其他写操作.</li>
+<li><p>读锁又被称为 <strong>共享锁</strong>, 对表进行范围查询的同时, 也能进行对表里的数据进行读操作.</p>
+</li>
+<li><p>如何给 select 语句上 排他锁: select 语句之后+ <code>for update</code>.<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-10-0-42" alt="Database-2019-9-6-10-0-42"></p>
+</li>
+<li>如何给 select 语句上 共享锁: select 语句之后+ <code>lock in share mode</code>.<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-11-24-19" alt="Database-2019-9-6-11-24-19"></li>
+</ul>
+<p>共享锁 和 排他锁 的兼容性<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-11-59-44" alt="Database-2019-9-6-11-59-44"><br>[X] 锁的分类<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-11-48-30" alt="Database-2019-9-6-11-48-30"></p>
+<ul>
+<li>乐观锁的实现–&gt; 记录数据版本<ul>
+<li>数据版本标识<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-12-44-4" alt="Database-2019-9-6-12-44-4"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-12-44-49" alt="Database-2019-9-6-12-44-49"></li>
+<li>时间戳</li>
+</ul>
+</li>
+</ul>
 
       
     </div><!-- .entry-content -->
@@ -110,6 +171,8 @@
     
 <nav class="nav-single">
     <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/2019/09/06/Redis/" rel="prev"><span class="meta-nav">←</span> Redis</a></span>
     
     
         <span class="nav-next"><a href="/2019/09/05/The-Process-of-Writing-Notes/" rel="next">The Process of Writing Notes <span class="meta-nav">→</span></a></span>
@@ -143,6 +206,10 @@
       <ul>
         
           <li>
+            <a href="/2019/09/06/Redis/">Redis</a>
+          </li>
+        
+          <li>
             <a href="/2019/09/05/Database/">Database</a>
           </li>
         
@@ -156,10 +223,6 @@
         
           <li>
             <a href="/2019/04/17/耸人听闻/">Astonished</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/13/只言片语化作振聋发聩/">只言片语化作振聋发聩</a>
           </li>
         
       </ul>
