@@ -62,7 +62,7 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
-    <article id="post-Redis" class="post-Redis post type-post status-publish format-standard hentry">
+    <article id="post-6. 底层知识之-JVM" class="post-6. 底层知识之-JVM post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
@@ -70,20 +70,98 @@
         
   
     <h1 class="entry-title">
-      <a class="article-title" href="/2019/09/06/Redis/">Redis</a>
+      <a class="article-title" href="/2019/09/08/6. 底层知识之-JVM/">6. 底层知识之 JVM</a>
     </h1>
   
 
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/06/Redis/" data-id="ck099oag400014swt572looua" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/08/6. 底层知识之-JVM/" data-id="ck0azyspn0000jwwt4nvjnqcz" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-19-13" alt="6. 底层知识之-JVM-2019-9-8-15-19-13"></p>
+<hr>
+<p>[toc]</p>
+<h1 id="1-平台无关性如何实现"><a href="#1-平台无关性如何实现" class="headerlink" title="1. 平台无关性如何实现"></a>1. 平台无关性如何实现</h1><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-10-48-39" alt="6. 底层知识之-JVM-2019-9-8-10-48-39"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-10-58-19" alt="6. 底层知识之-JVM-2019-9-8-10-58-19"><br>小拓展</p>
+<ol>
+<li>命令行指令 javap<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-0-1" alt="6. 底层知识之-JVM-2019-9-8-11-0-1"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-0-19" alt="6. 底层知识之-JVM-2019-9-8-11-0-19"></li>
+<li>mac 向 远程 Linux 发送文件<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-6-52" alt="6. 底层知识之-JVM-2019-9-8-11-6-52"></li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-7-38" alt="6. 底层知识之-JVM-2019-9-8-11-7-38"></p>
+<h1 id="2-JVM-如何加载-class-文件"><a href="#2-JVM-如何加载-class-文件" class="headerlink" title="2. JVM 如何加载 class 文件"></a>2. JVM 如何加载 class 文件</h1><p>JVM 在内存中的结构图<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-13-26" alt="6. 底层知识之-JVM-2019-9-8-11-13-26"></p>
+<h1 id="3-手写一个反射例子"><a href="#3-手写一个反射例子" class="headerlink" title="3. 手写一个反射例子"></a>3. 手写一个反射例子</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Robot</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHi</span><span class="params">(String helloSentence)</span></span>&#123;</span><br><span class="line">        System.out.println(helloSentence + <span class="string">" "</span> + name);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">throwHello</span><span class="params">(String tag)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello "</span> + tag;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello Robot"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 测试类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReflectSample</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException, NoSuchFieldException </span>&#123;</span><br><span class="line">        Class rc = Class.forName(<span class="string">"com.interview.javabasic.reflect.Robot"</span>);</span><br><span class="line">        Robot r = (Robot) rc.newInstance();</span><br><span class="line">        System.out.println(<span class="string">"Class name is "</span> + rc.getName());</span><br><span class="line">        Method getHello = rc.getDeclaredMethod(<span class="string">"throwHello"</span>, String.class);</span><br><span class="line">        getHello.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        Object str = getHello.invoke(r, <span class="string">"Bob"</span>);</span><br><span class="line">        System.out.println(<span class="string">"getHello result is "</span> + str);</span><br><span class="line">        Method sayHi = rc.getMethod(<span class="string">"sayHi"</span>, String.class);</span><br><span class="line">        sayHi.invoke(r, <span class="string">"Welcome"</span>);</span><br><span class="line">        Field name = rc.getDeclaredField(<span class="string">"name"</span>);</span><br><span class="line">        name.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">        name.set(r, <span class="string">"Alice"</span>);</span><br><span class="line">        sayHi.invoke(r, <span class="string">"Welcome"</span>);</span><br><span class="line">        System.out.println(System.getProperty(<span class="string">"java.ext.dirs"</span>));</span><br><span class="line">        System.out.println(System.getProperty(<span class="string">"java.class.path"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="4-谈谈-ClassLoader"><a href="#4-谈谈-ClassLoader" class="headerlink" title="4. 谈谈 ClassLoader"></a>4. 谈谈 ClassLoader</h1><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-49-10" alt="6. 底层知识之-JVM-2019-9-8-11-49-10"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-50-1" alt="6. 底层知识之-JVM-2019-9-8-11-50-1"></p>
+<ol>
+<li>分类<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-12-23-49" alt="6. 底层知识之-JVM-2019-9-8-12-23-49"></li>
+<li>如何实现一个自定义 ClassLoader<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-12-44-44" alt="6. 底层知识之-JVM-2019-9-8-12-44-44"></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String path;</span><br><span class="line">    <span class="keyword">private</span> String classLoaderName;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyClassLoader</span><span class="params">(String path, String classLoaderName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.path = path;</span><br><span class="line">        <span class="keyword">this</span>.classLoaderName = classLoaderName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//用于寻找类文件</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Class <span class="title">findClass</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] b = loadClassData(name);</span><br><span class="line">        <span class="comment">// 字节码增强技术</span></span><br><span class="line">        <span class="keyword">return</span> defineClass(name, b, <span class="number">0</span>, b.length);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//用于加载类文件</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] loadClassData(String name) &#123;</span><br><span class="line">        name = path + name + <span class="string">".class"</span>;</span><br><span class="line">        InputStream in = <span class="keyword">null</span>;</span><br><span class="line">        ByteArrayOutputStream out = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            in = <span class="keyword">new</span> FileInputStream(<span class="keyword">new</span> File(name));</span><br><span class="line">            out = <span class="keyword">new</span> ByteArrayOutputStream();</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> ((i = in.read()) != -<span class="number">1</span>) &#123;</span><br><span class="line">                out.write(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                out.close();</span><br><span class="line">                in.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> out.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>classloader 的<strong>作用</strong>, <strong>本质</strong>, <strong>分类</strong></li>
+</ol>
+<h1 id="5-说说类加载器的双亲委派机制"><a href="#5-说说类加载器的双亲委派机制" class="headerlink" title="5.说说类加载器的双亲委派机制"></a>5.说说类加载器的双亲委派机制</h1><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-14-45-45" alt="6. 底层知识之-JVM-2019-9-8-14-45-45"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-17-8" alt="6. 底层知识之-JVM-2019-9-8-15-17-8"><br>为什么?<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-21-31" alt="6. 底层知识之-JVM-2019-9-8-15-21-31"></p>
+<h1 id="6-loadClass-和-forName-的区别"><a href="#6-loadClass-和-forName-的区别" class="headerlink" title="6. loadClass 和 forName 的区别"></a>6. loadClass 和 forName 的区别</h1><ol>
+<li>类的加载方式</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-30-20" alt="6. 底层知识之-JVM-2019-9-8-15-30-20"></p>
+<blockquote>
+<p>loadClass 是上面源码中方法名称</p>
+</blockquote>
+<ol start="2">
+<li>类的装载过程<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-36-14" alt="6. 底层知识之-JVM-2019-9-8-15-36-14"></li>
+</ol>
+<h1 id="7-Java-的内存模型"><a href="#7-Java-的内存模型" class="headerlink" title="7. Java 的内存模型"></a>7. Java 的内存模型</h1><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-41-23" alt="6. 底层知识之-JVM-2019-9-8-15-41-23"></p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2019/09/08/6. 底层知识之-JVM/">
+    <time datetime="2019-09-08T02:39:12.000Z" class="entry-date">
+        2019-09-08
+    </time>
+</a>
+    
+    
+  <span class="article-delim">&#8226;</span>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JVM/">JVM</a></li></ul>
+
+    </footer>
+</article>
+
+
+
+
+
+
+  
+    <article id="post-4. Redis" class="post-4. Redis post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2019/09/06/4. Redis/">4. Redis</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/06/4. Redis/" data-id="ck0azsrca000264wtd4odexdh" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
         <p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-11-58" alt="Redis-2019-9-6-17-11-58"></p>
+<p>[toc]</p>
 <h1 id="1-Redis-的-数据存储类型"><a href="#1-Redis-的-数据存储类型" class="headerlink" title="1. Redis 的 数据存储类型"></a>1. Redis 的 数据存储类型</h1><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-36-11" alt="Redis-2019-9-6-17-36-11"></p>
 <ul>
 <li><p>String</p>
@@ -116,32 +194,32 @@
 </ul>
 <h1 id="2-如何从海量数据里查询某一固定前缀的-key"><a href="#2-如何从海量数据里查询某一固定前缀的-key" class="headerlink" title="2. 如何从海量数据里查询某一固定前缀的 key?"></a>2. 如何从海量数据里查询某一固定前缀的 key?</h1><p>首重 –&gt; <img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-2-32" alt="Redis-2019-9-6-18-2-32"></p>
 <ul>
-<li>方案1:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-4-24" alt="Redis-2019-9-6-18-4-24"><ul>
+<li>方案 1:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-4-24" alt="Redis-2019-9-6-18-4-24"><ul>
 <li>一次性返回所有匹配的 key</li>
 <li>面试官反问: redis 给线上的业务提供服务, 使用 keys 指令有什么问题?</li>
 <li>key 数量过大的话, 会导致 redis client 卡住, 对内存的消耗和 redis server 都是一个隐患.</li>
 </ul>
 </li>
-<li><strong>方案2</strong>:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-16-51" alt="Redis-2019-9-6-18-16-51"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-15-13" alt="Redis-2019-9-6-18-15-13"><ul>
+<li><strong>方案 2</strong>:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-16-51" alt="Redis-2019-9-6-18-16-51"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-15-13" alt="Redis-2019-9-6-18-15-13"><ul>
 <li>游标不顺序, 需要去重, 可用循环 + hashset</li>
 </ul>
 </li>
 </ul>
 <h1 id="3-如何实现分布式锁"><a href="#3-如何实现分布式锁" class="headerlink" title="3. 如何实现分布式锁"></a>3. 如何实现分布式锁</h1><p>原理:</p>
 <ol>
-<li><p>方案1: 利用原子性<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-26-10" alt="Redis-2019-9-6-18-26-10"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-24-54" alt="Redis-2019-9-6-18-24-54"></p>
+<li><p>方案 1: 利用原子性<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-26-10" alt="Redis-2019-9-6-18-26-10"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-24-54" alt="Redis-2019-9-6-18-24-54"></p>
 </li>
-<li><p>方案2: 设置过期时间</p>
+<li><p>方案 2: 设置过期时间</p>
 </li>
-<li><p><strong>方案3</strong>:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-19-47-58" alt="Redis-2019-9-6-19-47-58"><br><strong>建议 <code>value</code> 取 requestId 或者 <code>线程id</code></strong>, 将当前占用资源的请求或者线程标识出来<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-0-11" alt="Redis-2019-9-7-11-0-11"></p>
+<li><p><strong>方案 3</strong>:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-19-47-58" alt="Redis-2019-9-6-19-47-58"><br><strong>建议 <code>value</code> 取 requestId 或者 <code>线程id</code></strong>, 将当前占用资源的请求或者线程标识出来<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-0-11" alt="Redis-2019-9-7-11-0-11"></p>
 <p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-1-33" alt="Redis-2019-9-7-11-1-33"><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-2-26" alt="Redis-2019-9-7-11-2-26"></p>
 </li>
 </ol>
 <h1 id="4-如何使用-Redis-做异步队列"><a href="#4-如何使用-Redis-做异步队列" class="headerlink" title="4. 如何使用 Redis 做异步队列"></a>4. 如何使用 Redis 做异步队列</h1><ul>
-<li>方案1. 直接使用 List 数据类型<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-25-56" alt="Redis-2019-9-7-11-25-56"></li>
-<li><p>方案2.<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-27-14" alt="Redis-2019-9-7-11-27-14"> - 演示:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-28-2" alt="Redis-2019-9-7-11-28-2"># 等待了 12s</p>
+<li>方案 1. 直接使用 List 数据类型<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-25-56" alt="Redis-2019-9-7-11-25-56"></li>
+<li><p>方案 2.<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-27-14" alt="Redis-2019-9-7-11-27-14"> - 演示:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-28-2" alt="Redis-2019-9-7-11-28-2"># 等待了 12s</p>
 </li>
-<li><p>方案3.<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-31-46" alt="Redis-2019-9-7-11-31-46"></p>
+<li><p>方案 3.<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-31-46" alt="Redis-2019-9-7-11-31-46"></p>
 <ul>
 <li><p>演示</p>
 <ul>
@@ -160,13 +238,12 @@
 </ul>
 </li>
 </ul>
-<p>#5. Redis 的持久化</p>
-
+<h1 id="5-Redis-的持久化"><a href="#5-Redis-的持久化" class="headerlink" title="5. Redis 的持久化"></a>5. Redis 的持久化</h1>
       
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
-    <a href="/2019/09/06/Redis/">
+    <a href="/2019/09/06/4. Redis/">
     <time datetime="2019-09-06T09:10:48.000Z" class="entry-date">
         2019-09-06
     </time>
@@ -182,7 +259,7 @@
 
 
   
-    <article id="post-Database" class="post-Database post type-post status-publish format-standard hentry">
+    <article id="post-3. Database" class="post-3. Database post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
@@ -190,14 +267,14 @@
         
   
     <h1 class="entry-title">
-      <a class="article-title" href="/2019/09/05/Database/">Database</a>
+      <a class="article-title" href="/2019/09/05/3. Database/">Database</a>
     </h1>
   
 
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/05/Database/" data-id="ck099oagd00034swtijvb90bu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/05/3. Database/" data-id="ck0azsrby000164wthuji5fcw" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -206,7 +283,7 @@
         <h1 id="考点"><a href="#考点" class="headerlink" title="考点"></a>考点</h1><h2 id="全局总览"><a href="#全局总览" class="headerlink" title="全局总览"></a>全局总览</h2><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/20190905160632.png" alt></p>
 <h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-14-19" alt="Database-2019-9-6-9-14-19"></p>
 <h3 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h3><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-17-15" alt="Database-2019-9-6-9-17-15"></p>
-<ol start="3">
+<ol>
 <li>索引的数据结构<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-32-56" alt="Database-2019-9-6-9-32-56"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-6-9-28-42" alt="Database-2019-9-6-9-28-42"></li>
 <li>如何调优 Sql<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Database-2019-9-5-19-25-45" alt="Database-2019-9-5-19-25-45"></li>
 <li>最左匹配原则的成因</li>
@@ -240,7 +317,7 @@
     </div><!-- .entry-content -->
 
     <footer class="entry-meta">
-    <a href="/2019/09/05/Database/">
+    <a href="/2019/09/05/3. Database/">
     <time datetime="2019-09-05T07:04:50.000Z" class="entry-date">
         2019-09-05
     </time>
@@ -271,13 +348,14 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/05/The-Process-of-Writing-Notes/" data-id="ck099oah900074swtka15jc9o" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/05/The-Process-of-Writing-Notes/" data-id="ck0azsrcd000364wt043ennse" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
-        <h1 id="How-to-write-blogs"><a href="#How-to-write-blogs" class="headerlink" title="How to write blogs?"></a>How to write blogs?</h1><p><em>Under</em> my blog’s root director：</p>
+        <p>[toc]</p>
+<h1 id="How-to-write-blogs"><a href="#How-to-write-blogs" class="headerlink" title="How to write blogs?"></a>How to write blogs?</h1><p><em>Under</em> my blog’s root director：</p>
 <ol>
 <li><code>hexo new post &quot;article title&quot;</code> –&gt; <em>New</em> a <code>.md</code> work;</li>
 <li><code>\source\_posts</code> –&gt; <em>Find</em> the source work, open and recording what you want;</li>
@@ -339,7 +417,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/04/Reburning/" data-id="ck099oagl00054swtodstx33l" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/04/Reburning/" data-id="ck0azsrcg000464wt12cw5t4x" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -383,7 +461,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/17/耸人听闻/" data-id="ck099oahz000c4swts0lyfeo4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/17/耸人听闻/" data-id="ck0azsrdo000b64wtoub7mglj" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -426,7 +504,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/13/只言片语化作振聋发聩/" data-id="ck099oai6000d4swtt852ubvx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/13/只言片语化作振聋发聩/" data-id="ck0azsrds000d64wt1evs9a1f" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -514,7 +592,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/13/Two-Tips/" data-id="ck099oahf00084swt0lk7cyjb" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/13/Two-Tips/" data-id="ck0azsrck000664wt5q1yv1w2" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -571,7 +649,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/13/article-title/" data-id="ck099oahw000b4swtc6ooa3xy" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/13/article-title/" data-id="ck0azsrci000564wtfa0pfhif" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -617,7 +695,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/13/hello-world/" data-id="ck099oahi00094swto0k3ql96" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/04/13/hello-world/" data-id="ck0azsrdw000f64wth8e3zbg1" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -676,11 +754,15 @@
       <ul>
         
           <li>
-            <a href="/2019/09/06/Redis/">Redis</a>
+            <a href="/2019/09/08/6. 底层知识之-JVM/">6. 底层知识之 JVM</a>
           </li>
         
           <li>
-            <a href="/2019/09/05/Database/">Database</a>
+            <a href="/2019/09/06/4. Redis/">4. Redis</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/05/3. Database/">Database</a>
           </li>
         
           <li>
@@ -689,10 +771,6 @@
         
           <li>
             <a href="/2019/09/04/Reburning/">Reburning</a>
-          </li>
-        
-          <li>
-            <a href="/2019/04/17/耸人听闻/">Astonished</a>
           </li>
         
       </ul>
@@ -704,7 +782,7 @@
   <aside class="widget">
     <h3 class="widget-title">Tags</h3>
     <div class="widget-content">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Edification/">Edification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-First-One/">The First One</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Edification/">Edification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-First-One/">The First One</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </aside>
 
@@ -713,7 +791,7 @@
   <aside class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-content tagcloud">
-      <a href="/tags/Edification/" style="font-size: 10px;">Edification</a> <a href="/tags/The-First-One/" style="font-size: 20px;">The First One</a>
+      <a href="/tags/Edification/" style="font-size: 10px;">Edification</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/The-First-One/" style="font-size: 20px;">The First One</a>
     </div>
   </aside>
 

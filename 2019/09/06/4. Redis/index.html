@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="[toc]
+1. Redis 的 数据存储类型
+
+String
+
+可以包含任何数据,e.g. jpg 图片或者序列化的对象
+应用: web 应用中记录 每天用户访问站点的次数
+
+
+
+
+Hash
+
+特别适合存储 对象
+
+
+List
+栈, 最新消息排行榜, 越新的消息越能排前显示
+
+
+Set
+无序, 唯">
+  
+
+  
+  
+  
+  
+  
+  
+  <title>4. Redis | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="[toc] 1. Redis 的 数据存储类型  String  可以包含任何数据,e.g. jpg 图片或者序列化的对象 应用: web 应用中记录 每天用户访问站点的次数     Hash  特别适合存储 对象   List 栈, 最新消息排行榜, 越新的消息越能排前显示   Set 无序, 唯一(去重) 应用: 微博中, 将所有关注人和所有粉丝存到一个集合中, redis 为集合提供了求交">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4. Redis">
+<meta property="og:url" content="https://reolcharm.github.io/2019/09/06/4. Redis/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[toc] 1. Redis 的 数据存储类型  String  可以包含任何数据,e.g. jpg 图片或者序列化的对象 应用: web 应用中记录 每天用户访问站点的次数     Hash  特别适合存储 对象   List 栈, 最新消息排行榜, 越新的消息越能排前显示   Set 无序, 唯一(去重) 应用: 微博中, 将所有关注人和所有粉丝存到一个集合中, redis 为集合提供了求交">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-11-58">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-36-11">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-19-3">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-2-32">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-4-24">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-16-51">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-15-13">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-26-10">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-24-54">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-19-47-58">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-0-11">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-1-33">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-2-26">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-25-56">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-27-14">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-28-2">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-31-46">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-34-53">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-37-9">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-39-21">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-41-42">
+<meta property="og:updated_time" content="2019-09-08T13:14:52.604Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4. Redis">
+<meta name="twitter:description" content="[toc] 1. Redis 的 数据存储类型  String  可以包含任何数据,e.g. jpg 图片或者序列化的对象 应用: web 应用中记录 每天用户访问站点的次数     Hash  特别适合存储 对象   List 栈, 最新消息排行榜, 越新的消息越能排前显示   Set 无序, 唯一(去重) 应用: 微博中, 将所有关注人和所有粉丝存到一个集合中, redis 为集合提供了求交">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-11-58">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src="//push.zhanzhang.baidu.com/push.js"></script>
+</head></html>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Hexo" rel="home">Hexo</a>
+      </h1>
+      
+        <h2 class="site-description hitokoto"></h2>
+        <script type="text/javascript" src="https://v1.hitokoto.cn/?encode=js"></script>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">Home</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">Archives</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-4. Redis" class="post-4. Redis post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      4. Redis
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/06/4. Redis/" data-id="ck0azsrca000264wtd4odexdh" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-11-58" alt="Redis-2019-9-6-17-11-58"></p>
+<p>[toc]</p>
+<h1 id="1-Redis-的-数据存储类型"><a href="#1-Redis-的-数据存储类型" class="headerlink" title="1. Redis 的 数据存储类型"></a>1. Redis 的 数据存储类型</h1><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-36-11" alt="Redis-2019-9-6-17-36-11"></p>
+<ul>
+<li><p>String</p>
+<ul>
+<li><strong>可以包含任何数据</strong>,e.g. jpg 图片或者序列化的对象</li>
+<li><p>应用: web 应用中记录 每天用户访问站点的次数</p>
+<p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-17-19-3" alt="Redis-2019-9-6-17-19-3"></p>
+</li>
+</ul>
+</li>
+<li><p>Hash</p>
+<ul>
+<li>特别适合存储 对象</li>
+</ul>
+</li>
+<li>List<ul>
+<li>栈, 最新消息排行榜, 越新的消息越能排前显示</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>无序, 唯一(去重)</li>
+<li>应用: 微博中, 将所有关注人和所有粉丝存到一个集合中, redis 为集合提供了求交集, 并集等操作, 非常容易实现共同关注, 共同喜好等功能</li>
+</ul>
+</li>
+<li>Sorted Set<ul>
+<li>全班成绩(排行榜);</li>
+<li>带权重的队列, 普通消息的<code>score</code> 为 2, 重要消息为 1, 按<code>score</code>的大小获取工作任务,让重要任务优先执行</li>
+</ul>
+</li>
+</ul>
+<h1 id="2-如何从海量数据里查询某一固定前缀的-key"><a href="#2-如何从海量数据里查询某一固定前缀的-key" class="headerlink" title="2. 如何从海量数据里查询某一固定前缀的 key?"></a>2. 如何从海量数据里查询某一固定前缀的 key?</h1><p>首重 –&gt; <img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-2-32" alt="Redis-2019-9-6-18-2-32"></p>
+<ul>
+<li>方案 1:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-4-24" alt="Redis-2019-9-6-18-4-24"><ul>
+<li>一次性返回所有匹配的 key</li>
+<li>面试官反问: redis 给线上的业务提供服务, 使用 keys 指令有什么问题?</li>
+<li>key 数量过大的话, 会导致 redis client 卡住, 对内存的消耗和 redis server 都是一个隐患.</li>
+</ul>
+</li>
+<li><strong>方案 2</strong>:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-16-51" alt="Redis-2019-9-6-18-16-51"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-15-13" alt="Redis-2019-9-6-18-15-13"><ul>
+<li>游标不顺序, 需要去重, 可用循环 + hashset</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-如何实现分布式锁"><a href="#3-如何实现分布式锁" class="headerlink" title="3. 如何实现分布式锁"></a>3. 如何实现分布式锁</h1><p>原理:</p>
+<ol>
+<li><p>方案 1: 利用原子性<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-26-10" alt="Redis-2019-9-6-18-26-10"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-18-24-54" alt="Redis-2019-9-6-18-24-54"></p>
+</li>
+<li><p>方案 2: 设置过期时间</p>
+</li>
+<li><p><strong>方案 3</strong>:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-6-19-47-58" alt="Redis-2019-9-6-19-47-58"><br><strong>建议 <code>value</code> 取 requestId 或者 <code>线程id</code></strong>, 将当前占用资源的请求或者线程标识出来<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-0-11" alt="Redis-2019-9-7-11-0-11"></p>
+<p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-1-33" alt="Redis-2019-9-7-11-1-33"><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-2-26" alt="Redis-2019-9-7-11-2-26"></p>
+</li>
+</ol>
+<h1 id="4-如何使用-Redis-做异步队列"><a href="#4-如何使用-Redis-做异步队列" class="headerlink" title="4. 如何使用 Redis 做异步队列"></a>4. 如何使用 Redis 做异步队列</h1><ul>
+<li>方案 1. 直接使用 List 数据类型<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-25-56" alt="Redis-2019-9-7-11-25-56"></li>
+<li><p>方案 2.<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-27-14" alt="Redis-2019-9-7-11-27-14"> - 演示:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-28-2" alt="Redis-2019-9-7-11-28-2"># 等待了 12s</p>
+</li>
+<li><p>方案 3.<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-31-46" alt="Redis-2019-9-7-11-31-46"></p>
+<ul>
+<li><p>演示</p>
+<ul>
+<li><p>sub<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-34-53" alt="Redis-2019-9-7-11-34-53"></p>
+</li>
+<li><p>pub<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-37-9" alt="Redis-2019-9-7-11-37-9"></p>
+</li>
+<li>接收消息后的 sub 一方<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-39-21" alt="Redis-2019-9-7-11-39-21"></li>
+</ul>
+</li>
+<li><p>缺点<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Redis-2019-9-7-11-41-42" alt="Redis-2019-9-7-11-41-42"><br>即发即消失, pub 之后, 如果 sub 下线了, 再上线之后, 接受不到消息的</p>
+<ul>
+<li>解决办法: 使用专业的 MQ</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="5-Redis-的持久化"><a href="#5-Redis-的持久化" class="headerlink" title="5. Redis 的持久化"></a>5. Redis 的持久化</h1>
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2019/09/06/4. Redis/">
+    <time datetime="2019-09-06T09:10:48.000Z" class="entry-date">
+        2019-09-06
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+        <span class="nav-previous"><a href="/2019/09/08/6. 底层知识之-JVM/" rel="prev"><span class="meta-nav">←</span> 6. 底层知识之 JVM</a></span>
+    
+    
+        <span class="nav-next"><a href="/2019/09/05/3. Database/" rel="next">Database <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//google.com/search">
+    <div>
+        <input type="text" value name="s" id="s">
+        <input type="submit" id="searchsubmit" value="搜索">
+    </div>
+</form></aside>
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/08/6. 底层知识之-JVM/">6. 底层知识之 JVM</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/06/4. Redis/">4. Redis</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/05/3. Database/">Database</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/05/The-Process-of-Writing-Notes/">The Process of Writing Notes</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/04/Reburning/">Reburning</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget-content">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Edification/">Edification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-First-One/">The First One</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </aside>
+
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget-content tagcloud">
+      <a href="/tags/Edification/" style="font-size: 10px;">Edification</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/The-First-One/" style="font-size: 20px;">The First One</a>
+    </div>
+  </aside>
+
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+  <span id="sitetime"></span>
+  <p>
+    &copy; 2019 John Doe
+    All rights reserved.
+  </p>
+  <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
+  <script language="javascript">
+    function siteTime() {
+      window.setTimeout("siteTime()", 1000);
+      var seconds = 1000;
+      var minutes = seconds * 60;
+      var hours = minutes * 60;
+      var days = hours * 24;
+      var years = days * 365;
+      var today = new Date();
+      var todayYear = today.getFullYear();
+      var todayMonth = today.getMonth() + 1;
+      var todayDate = today.getDate();
+      var todayHour = today.getHours();
+      var todayMinute = today.getMinutes();
+      var todaySecond = today.getSeconds();
+      var t1 = Date.UTC(2017, 09, 11, 00, 00, 00); //北京时间2018-2-13 00:00:00
+      var t2 = Date.UTC(
+        todayYear,
+        todayMonth,
+        todayDate,
+        todayHour,
+        todayMinute,
+        todaySecond
+      );
+      var diff = t2 - t1;
+      var diffYears = Math.floor(diff / years);
+      var diffDays = Math.floor(diff / days - diffYears * 365);
+      var diffHours = Math.floor(
+        (diff - (diffYears * 365 + diffDays) * days) / hours
+      );
+      var diffMinutes = Math.floor(
+        (diff - (diffYears * 365 + diffDays) * days - diffHours * hours) /
+          minutes
+      );
+      var diffSeconds = Math.floor(
+        (diff -
+          (diffYears * 365 + diffDays) * days -
+          diffHours * hours -
+          diffMinutes * minutes) /
+          seconds
+      );
+      document.getElementById("sitetime").innerHTML =
+        "本站已运行 " +
+        diffYears +
+        " 年 " +
+        diffDays +
+        " 天 " +
+        diffHours +
+        " 小时 " +
+        diffMinutes +
+        " 分钟 " +
+        diffSeconds +
+        " 秒";
+    } /*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+  </script>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js'];</script>
+
+<script src="/js/jquery-3.3.1.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
