@@ -23,15 +23,14 @@ mac 向 远程 Linux 发送文件
   
   <title>6. 底层知识之 JVM | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="[toc] 1. 平台无关性如何实现小拓展  命令行指令 javap mac 向 远程 Linux 发送文件   2. JVM 如何加载 class 文件JVM 在内存中的结构图 3. 手写一个反射例子1234567891011121314151617181920212223242526272829303132public class Robot &amp;#123;    private Strin">
+  <meta name="description" content="[toc] 1. 平台无关性如何实现小拓展  命令行指令 javap mac 向 远程 Linux 发送文件   2. JVM 如何加载 class 文件JVM 在内存中的结构图 3. 手写一个反射例子1234567891011121314151617181920212223242526272829303132public class Robot &amp;#123;    private String">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="6. 底层知识之 JVM">
 <meta property="og:url" content="https://reolcharm.github.io/2019/09/08/6. 底层知识之-JVM/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="[toc] 1. 平台无关性如何实现小拓展  命令行指令 javap mac 向 远程 Linux 发送文件   2. JVM 如何加载 class 文件JVM 在内存中的结构图 3. 手写一个反射例子1234567891011121314151617181920212223242526272829303132public class Robot &amp;#123;    private Strin">
+<meta property="og:description" content="[toc] 1. 平台无关性如何实现小拓展  命令行指令 javap mac 向 远程 Linux 发送文件   2. JVM 如何加载 class 文件JVM 在内存中的结构图 3. 手写一个反射例子1234567891011121314151617181920212223242526272829303132public class Robot &amp;#123;    private String">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-19-13">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-10-48-39">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-10-58-19">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-0-1">
@@ -49,11 +48,11 @@ mac 向 远程 Linux 发送文件
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-30-20">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-36-14">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-41-23">
-<meta property="og:updated_time" content="2019-09-08T13:12:16.576Z">
+<meta property="og:updated_time" content="2019-09-09T00:37:03.447Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="6. 底层知识之 JVM">
-<meta name="twitter:description" content="[toc] 1. 平台无关性如何实现小拓展  命令行指令 javap mac 向 远程 Linux 发送文件   2. JVM 如何加载 class 文件JVM 在内存中的结构图 3. 手写一个反射例子1234567891011121314151617181920212223242526272829303132public class Robot &amp;#123;    private Strin">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-19-13">
+<meta name="twitter:description" content="[toc] 1. 平台无关性如何实现小拓展  命令行指令 javap mac 向 远程 Linux 发送文件   2. JVM 如何加载 class 文件JVM 在内存中的结构图 3. 手写一个反射例子1234567891011121314151617181920212223242526272829303132public class Robot &amp;#123;    private String">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-10-48-39">
   
   
     <link rel="icon" href="/css/images/favicon.ico">
@@ -109,15 +108,13 @@ mac 向 远程 Linux 发送文件
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/08/6. 底层知识之-JVM/" data-id="ck0azyspn0000jwwt4nvjnqcz" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/08/6. 底层知识之-JVM/" data-id="ck0jl0bvq0003ogwt58efgpek" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
-        <p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-15-19-13" alt="6. 底层知识之-JVM-2019-9-8-15-19-13"></p>
-<hr>
-<p>[toc]</p>
+        <p>[toc]</p>
 <h1 id="1-平台无关性如何实现"><a href="#1-平台无关性如何实现" class="headerlink" title="1. 平台无关性如何实现"></a>1. 平台无关性如何实现</h1><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-10-48-39" alt="6. 底层知识之-JVM-2019-9-8-10-48-39"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-10-58-19" alt="6. 底层知识之-JVM-2019-9-8-10-58-19"><br>小拓展</p>
 <ol>
 <li>命令行指令 javap<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-0-1" alt="6. 底层知识之-JVM-2019-9-8-11-0-1"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/6.%20%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E4%B9%8B-JVM-2019-9-8-11-0-19" alt="6. 底层知识之-JVM-2019-9-8-11-0-19"></li>
@@ -170,6 +167,8 @@ mac 向 远程 Linux 发送文件
 <nav class="nav-single">
     <h3 class="assistive-text">文章导航</h3>
     
+        <span class="nav-previous"><a href="/2019/09/10/广告系统启航/" rel="prev"><span class="meta-nav">←</span> 广告系统启航</a></span>
+    
     
         <span class="nav-next"><a href="/2019/09/06/4. Redis/" rel="next">4. Redis <span class="meta-nav">→</span></a></span>
     
@@ -194,6 +193,13 @@ mac 向 远程 Linux 发送文件
     
   
     
+  <aside class="widget">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget-content">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Spring/">Spring</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </aside>
+
   
     
   <aside class="widget">
@@ -202,23 +208,23 @@ mac 向 远程 Linux 发送文件
       <ul>
         
           <li>
-            <a href="/2019/09/08/6. 底层知识之-JVM/">6. 底层知识之 JVM</a>
+            <a href="/2019/09/13/Smart-IDEA/">Smart IDEA</a>
           </li>
         
           <li>
-            <a href="/2019/09/06/4. Redis/">4. Redis</a>
+            <a href="/2019/09/12/How-to-Study/">How to Study</a>
           </li>
         
           <li>
-            <a href="/2019/09/05/3. Database/">Database</a>
+            <a href="/2019/09/11/Data-Construction/">Data Construction</a>
           </li>
         
           <li>
-            <a href="/2019/09/05/The-Process-of-Writing-Notes/">The Process of Writing Notes</a>
+            <a href="/2019/09/11/Spring-SpringBoot/">Spring&amp;SpringBoot</a>
           </li>
         
           <li>
-            <a href="/2019/09/04/Reburning/">Reburning</a>
+            <a href="/2019/09/10/广告系统启航/">广告系统启航</a>
           </li>
         
       </ul>
@@ -230,7 +236,7 @@ mac 向 远程 Linux 发送文件
   <aside class="widget">
     <h3 class="widget-title">Tags</h3>
     <div class="widget-content">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Edification/">Edification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-First-One/">The First One</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Edification/">Edification</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JVM/">JVM</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SpringBoot/">SpringBoot</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/The-First-One/">The First One</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </aside>
 
@@ -239,7 +245,7 @@ mac 向 远程 Linux 发送文件
   <aside class="widget">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget-content tagcloud">
-      <a href="/tags/Edification/" style="font-size: 10px;">Edification</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/The-First-One/" style="font-size: 20px;">The First One</a>
+      <a href="/tags/Edification/" style="font-size: 10px;">Edification</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/SpringBoot/" style="font-size: 10px;">SpringBoot</a> <a href="/tags/The-First-One/" style="font-size: 20px;">The First One</a>
     </div>
   </aside>
 
