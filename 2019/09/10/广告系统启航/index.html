@@ -34,9 +34,12 @@ application.yml
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-20-15-38-56">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-20-15-40-50">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-26-10-18-44">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-26-10-20-26">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-26-10-21-9">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-21-15-5-58">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-21-15-7-23">
-<meta property="og:updated_time" content="2019-09-24T15:38:08.280Z">
+<meta property="og:updated_time" content="2019-09-26T02:21:29.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AdS">
 <meta name="twitter:description" content="chapter03: Eureka &amp;amp; ZuulFilter 搭建 eureka server pom.xml application.yml   搭建 Customer ZuulFilter 并注册到 server 中 搭建框架: pom + yml 自定义的继承 Zuulfilter    chapter044.1 统一响应处理的开发12@RestControllerAdvicepub">
@@ -96,7 +99,7 @@ application.yml
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/10/广告系统启航/" data-id="ck0y0e7mi000mjowtb6ev16go" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/10/广告系统启航/" data-id="ck14yqcci000q6swtezl0a6le" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -128,6 +131,7 @@ application.yml
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-20-15-38-56" alt="广告系统启航-2019-9-20-15-38-56"></p>
 <p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-20-15-40-50" alt="广告系统启航-2019-9-20-15-40-50"></p>
+<p>表:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-26-10-18-44" alt="广告系统启航-2019-9-26-10-18-44"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-26-10-20-26" alt="广告系统启航-2019-9-26-10-20-26"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/%E5%B9%BF%E5%91%8A%E7%B3%BB%E7%BB%9F%E5%90%AF%E8%88%AA-2019-9-26-10-21-9" alt="广告系统启航-2019-9-26-10-21-9"></p>
 <h2 id="3-2-业务功能实现的技巧与思路"><a href="#3-2-业务功能实现的技巧与思路" class="headerlink" title="3.2 业务功能实现的技巧与思路"></a>3.2 业务功能实现的技巧与思路</h2><h3 id="思路-1-参数状态通过枚举获得"><a href="#思路-1-参数状态通过枚举获得" class="headerlink" title="思路 1: 参数状态通过枚举获得"></a>思路 1: 参数状态通过枚举获得</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Getter</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> CommonStatus &#123;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 用户, 计划, 单元等等的有效状态</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"> VALID(<span class="number">1</span>, <span class="string">"有效状态"</span>),</span><br><span class="line"> INVALID(<span class="number">0</span>, <span class="string">"无效状态"</span>);</span><br><span class="line"> <span class="keyword">private</span> Integer status;</span><br><span class="line"> <span class="keyword">private</span> String desc;</span><br><span class="line"></span><br><span class="line"> CommonStatus(Integer status, String desc) &#123;</span><br><span class="line">     <span class="keyword">this</span>.status = status;</span><br><span class="line">     <span class="keyword">this</span>.desc = desc;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在 po 中通过</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.planStatus = CommonStatus.VALID.getStatus();</span><br></pre></td></tr></table></figure>
@@ -200,10 +204,6 @@ application.yml
       <ul>
         
           <li>
-            <a href="/2019/09/24/广告系统启航/">(no title)</a>
-          </li>
-        
-          <li>
             <a href="/2019/09/13/Smart-IDEA/">Smart IDEA</a>
           </li>
         
@@ -217,6 +217,10 @@ application.yml
         
           <li>
             <a href="/2019/09/11/Spring-SpringBoot/">Spring&amp;SpringBoot</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/10/广告系统启航/">AdS</a>
           </li>
         
       </ul>

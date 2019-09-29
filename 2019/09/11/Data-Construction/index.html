@@ -4,7 +4,14 @@
   <meta charset="utf-8">
   
   
-  <meta name="description" content>
+  <meta name="description" content="1. 数组 &amp;amp; 动态数组
+2.栈 &amp;amp; 队列 &amp;amp; 循环队列原理演示
+数组为空, 队列移出元素: 控制变量front,
+向循环队列添加元素: 控制tail
+
+注意点
+(tail + 1) % capacity == front 表示队列满了.
+第一个元素在 front 位置, 最">
   
 
   
@@ -15,19 +22,28 @@
   
   <title>Data Construction | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="1. 数组 &amp;amp; 动态数组 2.栈 &amp;amp; 队列 &amp;amp; 循环队列原理演示 数组为空, 队列移出元素: 控制变量front, 向循环队列添加元素: 控制tail  注意点 (tail + 1) % capacity == front 表示队列满了. 第一个元素在 front 位置, 最后一个在 tail - 1 的位置, 队列是循环起来的, 所以 tail 很有可能比 front 小">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Data Construction">
 <meta property="og:url" content="https://reolcharm.github.io/2019/09/11/Data-Construction/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 数组 &amp;amp; 动态数组 2.栈 &amp;amp; 队列 &amp;amp; 循环队列原理演示 数组为空, 队列移出元素: 控制变量front, 向循环队列添加元素: 控制tail  注意点 (tail + 1) % capacity == front 表示队列满了. 第一个元素在 front 位置, 最后一个在 tail - 1 的位置, 队列是循环起来的, 所以 tail 很有可能比 front 小">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-44-37">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-43-15">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-45-39">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-48-21">
 <meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-50-2">
-<meta property="og:updated_time" content="2019-09-11T13:50:31.037Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-17-9-32">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-18-7-39">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-19-28-11">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-19-33-17">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-19-36-29">
+<meta property="og:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-19-52-33">
+<meta property="og:updated_time" content="2019-09-29T12:30:30.889Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Data Construction">
+<meta name="twitter:description" content="1. 数组 &amp;amp; 动态数组 2.栈 &amp;amp; 队列 &amp;amp; 循环队列原理演示 数组为空, 队列移出元素: 控制变量front, 向循环队列添加元素: 控制tail  注意点 (tail + 1) % capacity == front 表示队列满了. 第一个元素在 front 位置, 最后一个在 tail - 1 的位置, 队列是循环起来的, 所以 tail 很有可能比 front 小">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-44-37">
   
   
@@ -84,13 +100,30 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/11/Data-Construction/" data-id="ck0y0e7lu0007jowt57fudtjm" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://reolcharm.github.io/2019/09/11/Data-Construction/" data-id="ck14yqcat00016swtban8wcbu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
-        <p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-44-37" alt="Data-Construction-2019-9-11-21-44-37"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-43-15" alt="Data-Construction-2019-9-11-21-43-15"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-45-39" alt="Data-Construction-2019-9-11-21-45-39"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-48-21" alt="Data-Construction-2019-9-11-21-48-21"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-50-2" alt="Data-Construction-2019-9-11-21-50-2"></p>
+        <h1 id="1-数组-amp-动态数组"><a href="#1-数组-amp-动态数组" class="headerlink" title="1. 数组 &amp; 动态数组"></a>1. 数组 &amp; 动态数组</h1><p><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-44-37" alt="Data-Construction-2019-9-11-21-44-37"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-43-15" alt="Data-Construction-2019-9-11-21-43-15"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-45-39" alt="Data-Construction-2019-9-11-21-45-39"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-48-21" alt="Data-Construction-2019-9-11-21-48-21"><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-11-21-50-2" alt="Data-Construction-2019-9-11-21-50-2"></p>
+<h1 id="2-栈-amp-队列-amp-循环队列"><a href="#2-栈-amp-队列-amp-循环队列" class="headerlink" title="2.栈 &amp; 队列 &amp; 循环队列"></a>2.栈 &amp; 队列 &amp; 循环队列</h1><h2 id="原理演示"><a href="#原理演示" class="headerlink" title="原理演示"></a>原理演示</h2><ul>
+<li>数组为空, 队列移出元素: 控制变量<code>front</code>,<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-17-9-32" alt="Data-Construction-2019-9-29-17-9-32"></li>
+<li>向循环队列添加元素: 控制<code>tail</code><br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-18-7-39" alt="Data-Construction-2019-9-29-18-7-39"></li>
+</ul>
+<h3 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h3><ul>
+<li><code>(tail + 1) % capacity == front</code> 表示队列满了.</li>
+<li>第一个元素在 <code>front</code> 位置, 最后一个在 <code>tail - 1</code> 的位置, 队列是循环起来的, 所以 <code>tail</code> 很有可能比 <code>front</code> 小.</li>
+</ul>
+<h2 id="源码展示"><a href="#源码展示" class="headerlink" title="源码展示"></a>源码展示</h2><ul>
+<li>核心扩容操作<br><strong>第一种</strong>遍历循环数组的方式:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-19-28-11" alt="Data-Construction-2019-9-29-19-28-11"></li>
+<li>常规 CRUD<ol>
+<li>入队操作<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-19-33-17" alt="Data-Construction-2019-9-29-19-33-17"></li>
+<li>出队<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-19-36-29" alt="Data-Construction-2019-9-29-19-36-29"></li>
+<li>toString<br><strong>第二种</strong>遍历循环数组的方式:<br><img src="https://raw.githubusercontent.com/Reolcharm/MyGitPic/master/BlogImg/Data-Construction-2019-9-29-19-52-33" alt="Data-Construction-2019-9-29-19-52-33"></li>
+</ol>
+</li>
+</ul>
 
       
     </div><!-- .entry-content -->
@@ -152,10 +185,6 @@
       <ul>
         
           <li>
-            <a href="/2019/09/24/广告系统启航/">(no title)</a>
-          </li>
-        
-          <li>
             <a href="/2019/09/13/Smart-IDEA/">Smart IDEA</a>
           </li>
         
@@ -169,6 +198,10 @@
         
           <li>
             <a href="/2019/09/11/Spring-SpringBoot/">Spring&amp;SpringBoot</a>
+          </li>
+        
+          <li>
+            <a href="/2019/09/10/广告系统启航/">AdS</a>
           </li>
         
       </ul>
